@@ -16,13 +16,16 @@ target_dir=r"D:\winr"
 def main():
     script_path=input("Your script path:")
     link_name=input("Your link name:")
+    other_args=input("Other arg_str:")
     assert os.sep in script_path
     assert script_path.endswith(".py")
     parts=script_path.rsplit(os.sep,maxsplit=1)
     dir_name,file_name=parts
-    bat_str=f"cmd /k \"cd /d {dir_name} && python .\{file_name}\""
-    file_name2=file_name.strip(".py")+".bat"
-
+    if not other_args:
+        bat_str=f"cmd /k \"cd /d {dir_name} && python .\{file_name}\""
+    else:
+        bat_str=f"cmd /k \"cd /d {dir_name} && python .\{file_name} {other_args}\""
+    file_name2=file_name.rstrip(".py")+".bat"
     bat_path=f"{target_dir}{os.sep}{file_name2}"
 
     with open(bat_path,"w",encoding="utf-8") as f:
